@@ -1,5 +1,23 @@
 import { createContext, useContext, useState, ReactNode } from 'react';
-import { Requirement, sampleRequirements } from '../data/requirements';
+
+interface Requirement {
+  id: number;
+  title: string;
+  category: string;
+  quantity: string;
+  budget: string;
+  description: string;
+  deadline: string;
+  location: string;
+  status: 'open' | 'in-progress' | 'closed';
+  postedBy: {
+    name: string;
+    company: string;
+    verified: boolean;
+  };
+  postedAt: string;
+  responses: number;
+}
 
 interface RequirementsContextType {
   requirements: Requirement[];
@@ -9,7 +27,7 @@ interface RequirementsContextType {
 const RequirementsContext = createContext<RequirementsContextType | undefined>(undefined);
 
 export function RequirementsProvider({ children }: { children: ReactNode }) {
-  const [requirements, setRequirements] = useState<Requirement[]>(sampleRequirements);
+  const [requirements, setRequirements] = useState<Requirement[]>([]);
 
   const addRequirement = (newReq: Omit<Requirement, 'id' | 'status' | 'postedAt' | 'responses'>) => {
     const requirement: Requirement = {

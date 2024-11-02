@@ -1,32 +1,70 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { User } from 'firebase/auth';
+import { auth, loginUser as firebaseLogin, registerUser as firebaseRegister, logoutUser as firebaseLogout } from '../lib/firebase';
 
 interface AuthContextType {
+  currentUser: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  logout: () => void;
+  loading: boolean;
+  loginUser: (email: string, password: string) => Promise<void>;
+  registerUser: (data: any) => Promise<void>;
+  logoutUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setCurrentUser(user);
+      setLoading(false);
+    });
+
+    return unsubscribe;
+  }, []);
 
   const login = async (email: string, password: string) => {
-    // In a real app, this would make an API call to verify credentials
-    if (email === 'admin@martspace.com' && password === 'admin123') {
-      setIsAuthenticated(true);
-    } else {
-      throw new Error('Invalid credentials');
+    try {
+      const user = await firebaseLogin(email, password);
+      setCurrentUser(user);
+    } catch (error) {
+      throw error;
     }
   };
 
-  const logout = () => {
-    setIsAuthenticated(false);
+  const register = async (data: any) => {
+    try {
+      const user = await firebaseRegister(data);
+      setCurrentUser(user);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await firebaseLogout();
+      setCurrentUser(null);
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const value = {
+    currentUser,
+    isAuthenticated: !!currentUser,
+    loading,
+    loginUser: login,
+    registerUser: register,
+    logoutUser: logout
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 }

@@ -1,26 +1,26 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
-import { Shield } from 'lucide-react';
+import { Shield, AlertCircle } from 'lucide-react';
+import { useAdminAuth } from '../../contexts/AdminAuthContext';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { adminLogin } = useAdminAuth();
 
   const from = location.state?.from?.pathname || '/admin/dashboard';
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
 
-    try {
-      await login(email, password);
+    const success = adminLogin(email, password);
+    if (success) {
       navigate(from, { replace: true });
-    } catch (err) {
+    } else {
       setError('Invalid credentials');
     }
   };
@@ -35,13 +35,25 @@ export default function AdminLogin() {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Admin Login
           </h2>
+          <p className="mt-2 text-center text-sm text-gray-600">
+            Access the admin dashboard
+          </p>
         </div>
+
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="rounded-md bg-red-50 p-4">
-              <div className="text-sm text-red-700">{error}</div>
+              <div className="flex">
+                <AlertCircle className="h-5 w-5 text-red-400" />
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">
+                    {error}
+                  </h3>
+                </div>
+              </div>
             </div>
           )}
+
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <label htmlFor="email-address" className="sr-only">
@@ -84,6 +96,14 @@ export default function AdminLogin() {
             >
               Sign in
             </button>
+          </div>
+
+          <div className="text-sm text-center text-gray-600">
+            Default credentials for demo:
+            <br />
+            Email: admin@martspace.com
+            <br />
+            Password: admin123
           </div>
         </form>
       </div>

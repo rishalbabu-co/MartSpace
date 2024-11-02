@@ -1,4 +1,5 @@
 import { Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
@@ -8,28 +9,52 @@ export default function Footer() {
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">About MartSpace</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">About Us</a></li>
-              <li><a href="#" className="hover:text-white">Join Sales</a></li>
-              <li><a href="#" className="hover:text-white">Success Stories</a></li>
-              <li><a href="#" className="hover:text-white">Press Section</a></li>
+              <li>
+                <Link to="/company/about" className="hover:text-white">About Us</Link>
+              </li>
+              <li>
+                <Link to="/company/join-sales" className="hover:text-white">Join Sales</Link>
+              </li>
+              <li>
+                <Link to="/company/success-stories" className="hover:text-white">Success Stories</Link>
+              </li>
+              <li>
+                <Link to="/company/press" className="hover:text-white">Press Section</Link>
+              </li>
             </ul>
           </div>
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">Help</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">Customer Support</a></li>
-              <li><a href="#" className="hover:text-white">Feedback</a></li>
-              <li><a href="#" className="hover:text-white">Complaints</a></li>
-              <li><a href="#" className="hover:text-white">Safety Tips</a></li>
+              <li>
+                <Link to="/support/customer-support" className="hover:text-white">Customer Support</Link>
+              </li>
+              <li>
+                <Link to="/support/feedback" className="hover:text-white">Feedback</Link>
+              </li>
+              <li>
+                <Link to="/support/complaints" className="hover:text-white">Complaints</Link>
+              </li>
+              <li>
+                <Link to="/support/safety-tips" className="hover:text-white">Safety Tips</Link>
+              </li>
             </ul>
           </div>
           <div>
             <h3 className="text-white text-lg font-semibold mb-4">Legal</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="hover:text-white">Terms of Use</a></li>
-              <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white">Cookie Policy</a></li>
-              <li><a href="#" className="hover:text-white">Disclaimer</a></li>
+              <li>
+                <Link to="/legal/terms" className="hover:text-white">Terms of Use</Link>
+              </li>
+              <li>
+                <Link to="/legal/privacy" className="hover:text-white">Privacy Policy</Link>
+              </li>
+              <li>
+                <Link to="/legal/cookies" className="hover:text-white">Cookie Policy</Link>
+              </li>
+              <li>
+                <Link to="/legal/disclaimer" className="hover:text-white">Disclaimer</Link>
+              </li>
             </ul>
           </div>
           <div>

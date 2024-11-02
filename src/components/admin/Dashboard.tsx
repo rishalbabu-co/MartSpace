@@ -5,7 +5,7 @@ import {
   Moon, Sun, LogOut
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import AdminSidebar from './AdminSidebar';
 import AnalyticsOverview from './AnalyticsOverview';
 import UserManagement from './UserManagement';
@@ -19,11 +19,11 @@ type TabType = 'overview' | 'users' | 'products' | 'requirements' | 'activity' |
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const { logout } = useAuth();
+  const { adminLogout } = useAdminAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    adminLogout();
     navigate('/admin/login');
   };
 
