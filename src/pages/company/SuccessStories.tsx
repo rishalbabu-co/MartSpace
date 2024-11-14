@@ -1,4 +1,4 @@
-import { Star, Award, TrendingUp } from 'lucide-react';
+import { TrendingUp } from 'lucide-react';
 
 export default function SuccessStories() {
   const stories = [

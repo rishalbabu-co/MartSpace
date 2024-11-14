@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from 'firebase/auth';
-import { auth, loginUser as firebaseLogin, registerUser as firebaseRegister, logoutUser as firebaseLogout } from '../lib/firebase';
+import { auth, loginUser, registerUser, logoutUser } from '../lib/firebase';
 
 interface AuthContextType {
   currentUser: User | null;
@@ -28,7 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => {
     try {
-      const user = await firebaseLogin(email, password);
+      const user = await loginUser(email, password);
       setCurrentUser(user);
     } catch (error) {
       throw error;
@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const register = async (data: any) => {
     try {
-      const user = await firebaseRegister(data);
+      const user = await registerUser(data);
       setCurrentUser(user);
     } catch (error) {
       throw error;
@@ -46,7 +46,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      await firebaseLogout();
+      await logoutUser();
       setCurrentUser(null);
     } catch (error) {
       throw error;

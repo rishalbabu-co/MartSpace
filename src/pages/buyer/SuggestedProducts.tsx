@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Package, Star, Heart, ExternalLink } from 'lucide-react';
+import { Star, Heart, ExternalLink } from 'lucide-react';
 
 interface Product {
   id: number;

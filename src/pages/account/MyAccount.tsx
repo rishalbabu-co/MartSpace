@@ -15,7 +15,7 @@ interface BusinessInfo {
 }
 
 export default function MyAccount() {
-  const { user } = useAuth();
+  
   const [isEditing, setIsEditing] = useState(false);
   const [businessInfo, setBusinessInfo] = useState<BusinessInfo>({
     companyName: 'Tech Solutions Ltd',
@@ -28,11 +28,6 @@ export default function MyAccount() {
     country: 'United States',
     website: 'www.techsolutions.com'
   });
-
-  const handleSave = () => {
-    // Save changes to backend
-    setIsEditing(false);
-  };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];

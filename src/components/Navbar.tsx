@@ -4,7 +4,6 @@ import { Menu, ShoppingBag, FileText, Settings, Users, LogOut, ChevronRight, Bui
 import { useModal } from '../contexts/ModalContext';
 import { useAuth } from '../contexts/AuthContext';
 import { useAuthModal } from '../contexts/AuthModalContext';
-import { logoutUser } from '../lib/firebase';
 import toast from 'react-hot-toast';
 import NotificationBell from './NotificationBell';
 
@@ -39,9 +38,9 @@ const menuItems = {
   ]
 };
 
-export default function Navbar({ currentPage, setCurrentPage }: NavbarProps) {
+export default function Navbar({ setCurrentPage }: NavbarProps) {
   const { openModal } = useModal();
-  const { currentUser, isAuthenticated } = useAuth();
+  const { isAuthenticated, logoutUser } = useAuth();
   const { showAuthModal } = useAuthModal();
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -93,8 +92,8 @@ export default function Navbar({ currentPage, setCurrentPage }: NavbarProps) {
               onClick={() => setCurrentPage('home')}
             >
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-blue-600">MartSpace</span>
-                <span className="text-xs text-gray-500">Your Global B2B Marketplace</span>
+                <span className="text-xl font-bold text-blue-700">MartSpace</span>
+                <span className="text-xs text-gray-500">Your Global B2B2C Marketplace</span>
               </div>
             </Link>
           </div>
@@ -126,57 +125,98 @@ export default function Navbar({ currentPage, setCurrentPage }: NavbarProps) {
         >
           <div className="max-w-7xl mx-auto p-6">
             <div className="grid grid-cols-3 gap-8">
-              {/* Seller Tools */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                  <Package className="h-5 w-5 text-blue-600 mr-2" />
-                  Seller Tools
-                </h3>
-                <div className="space-y-1">
-                  {menuItems.seller.map((item) => {
-                    const Icon = item.icon;
-                    return (
+              {isAuthenticated ? (
+                <>
+                  {/* Seller Tools - Only shown when authenticated */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                      <Package className="h-5 w-5 text-blue-600 mr-2" />
+                      Seller Tools
+                    </h3>
+                    <div className="space-y-1">
+                      {menuItems.seller.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg group"
+                            onClick={() => setIsMegaMenuOpen(false)}
+                          >
+                            <Icon className="h-5 w-5 text-gray-400 mr-2 group-hover:text-blue-600" />
+                            <span className="group-hover:text-blue-600">{item.label}</span>
+                            <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 text-blue-600" />
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Buyer Tools - Only shown when authenticated */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                      <ShoppingBag className="h-5 w-5 text-blue-600 mr-2" />
+                      Buyer Tools
+                    </h3>
+                    <div className="space-y-1">
+                      {menuItems.buyer.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <Link
+                            key={item.path}
+                            to={item.path}
+                            className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg group"
+                            onClick={() => setIsMegaMenuOpen(false)}
+                          >
+                            <Icon className="h-5 w-5 text-gray-400 mr-2 group-hover:text-blue-600" />
+                            <span className="group-hover:text-blue-600">{item.label}</span>
+                            <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 text-blue-600" />
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Show login prompts when not authenticated */}
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                      <Package className="h-5 w-5 text-blue-600 mr-2" />
+                      Seller Tools
+                    </h3>
+                    <div className="p-4 bg-gray-50 rounded-lg">
+                      <p className="text-gray-600 mb-4">Sign in to access seller tools and start selling on MartSpace</p>
                       <Link
-                        key={item.path}
-                        to={item.path}
-                        className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg group"
+                        to="/login"
+                        className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                         onClick={() => setIsMegaMenuOpen(false)}
                       >
-                        <Icon className="h-5 w-5 text-gray-400 mr-2 group-hover:text-blue-600" />
-                        <span className="group-hover:text-blue-600">{item.label}</span>
-                        <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 text-blue-600" />
+                        Sign In
                       </Link>
-                    );
-                  })}
-                </div>
-              </div>
+                    </div>
+                  </div>
 
-              {/* Buyer Tools */}
-              <div>
-                <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-                  <ShoppingBag className="h-5 w-5 text-blue-600 mr-2" />
-                  Buyer Tools
-                </h3>
-                <div className="space-y-1">
-                  {menuItems.buyer.map((item) => {
-                    const Icon = item.icon;
-                    return (
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                      <ShoppingBag className="h-5 w-5 text-blue-600 mr-2" />
+                      Buyer Tools
+                    </h3>
+                    <div className="p-4 bg-gray-50 rounded-lg">
+                      <p className="text-gray-600 mb-4">Sign in to access buyer tools and start sourcing products</p>
                       <Link
-                        key={item.path}
-                        to={item.path}
-                        className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg group"
+                        to="/register"
+                        className="inline-block px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
                         onClick={() => setIsMegaMenuOpen(false)}
                       >
-                        <Icon className="h-5 w-5 text-gray-400 mr-2 group-hover:text-blue-600" />
-                        <span className="group-hover:text-blue-600">{item.label}</span>
-                        <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 text-blue-600" />
+                        Register Now
                       </Link>
-                    );
-                  })}
-                </div>
-              </div>
+                    </div>
+                  </div>
+                </>
+              )}
 
-              {/* Account & Support */}
+              {/* Account & Support - Always visible */}
               <div>
                 <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                   <Users className="h-5 w-5 text-blue-600 mr-2" />
@@ -195,7 +235,7 @@ export default function Navbar({ currentPage, setCurrentPage }: NavbarProps) {
                         <ChevronRight className="h-4 w-4 ml-auto opacity-0 group-hover:opacity-100 text-blue-600" />
                       </Link>
                       <Link
-                        to="/app/settings"
+                        to="/settings"
                         className="flex items-center px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-lg group"
                         onClick={() => setIsMegaMenuOpen(false)}
                       >

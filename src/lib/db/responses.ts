@@ -1,5 +1,4 @@
 import prisma from '../prisma';
-import type { Response } from '@prisma/client';
 
 export async function getResponses(requirementId: number) {
   return prisma.response.findMany({

@@ -29,7 +29,7 @@ const products = [
   {
     id: 4,
     name: 'Smart Manufacturing Robot',
-    image: 'https://images.unsplash.com/photo-1565508590984-051ecaa3a724?auto=format&fit=crop&w=800&q=80',
+    image: 'https://cdn.shopify.com/s/files/1/0714/8784/8673/files/manufacturing.png?v=1731493330?auto=format&fit=crop&w=800&q=80',
     price: '$8,000 - $12,000',
     moq: '1 Unit',
     supplier: 'RoboTech Systems',

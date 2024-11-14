@@ -29,11 +29,6 @@ export default function MyAccount() {
     website: 'www.techsolutions.com'
   });
 
-  const handleSave = () => {
-    // Save changes to backend
-    setIsEditing(false);
-  };
-
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {

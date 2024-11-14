@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { 
-  Users, Package, TrendingUp, DollarSign, 
-  ShoppingCart, AlertCircle, BarChart2, Activity,
+import {
   Moon, Sun, LogOut
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';

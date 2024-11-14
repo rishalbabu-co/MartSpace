@@ -1,4 +1,4 @@
-import { Newspaper, Download, Calendar, ExternalLink } from 'lucide-react';
+import { Download, Calendar, ExternalLink } from 'lucide-react';
 
 export default function PressSection() {
   const pressReleases = [

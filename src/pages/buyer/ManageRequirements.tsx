@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FileText, Search, Filter, Clock, CheckCircle, XCircle, Plus } from 'lucide-react';
+import { Search, Filter, Clock, CheckCircle, XCircle, Plus } from 'lucide-react';
 import { useModal } from '../../contexts/ModalContext';
 
 interface Requirement {

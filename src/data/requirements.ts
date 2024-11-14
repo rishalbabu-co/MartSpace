@@ -1,5 +1,3 @@
-import { categories } from './products';
-
 export interface Requirement {
   id: number;
   title: string;

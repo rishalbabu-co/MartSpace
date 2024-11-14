@@ -1,4 +1,4 @@
-import { Lock, Shield, Eye } from 'lucide-react';
+import { Lock, Shield, } from 'lucide-react';
 
 export default function PrivacyPolicy() {
   return (

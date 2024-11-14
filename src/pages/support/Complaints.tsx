@@ -1,4 +1,4 @@
-import { AlertTriangle, MessageSquare, Shield, Clock } from 'lucide-react';
+import { MessageSquare, Shield, Clock } from 'lucide-react';
 
 export default function Complaints() {
   return (

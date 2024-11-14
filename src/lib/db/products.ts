@@ -1,5 +1,4 @@
 import prisma from '../prisma';
-import type { Product } from '@prisma/client';
 
 export async function getProducts() {
   return prisma.product.findMany({

@@ -1,4 +1,4 @@
-import { FileText, Search } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 export default function LatestLeads() {
   return (

@@ -1,8 +1,6 @@
 import { useLocation, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
-import HeroSection from './components/HeroSection';
-import CategorySection from './components/CategorySection';
-import FeaturedProducts from './components/FeaturedProducts';
+import HomePage from './components/HomePage';
 import AdminLogin from './components/admin/AdminLogin';
 import Dashboard from './components/admin/Dashboard';
 import PostRequirementModal from './components/PostRequirementModal';
@@ -12,6 +10,9 @@ import { AuthModalProvider } from './contexts/AuthModalContext';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
 import ProtectedAdminRoute from './components/admin/ProtectedAdminRoute';
 import { useAuth } from './contexts/AuthContext';
+import ProductDetails from './pages/supplier/ProductDetails';
+import SupplierCatalog from './pages/supplier/SupplierCatalog';
+import ManufacturerPage from './pages/manufacturer/ManufacturerPage';
 
 // Import pages
 import Login from './pages/auth/Login';
@@ -63,16 +64,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-function HomePage() {
-  return (
-    <main>
-      <HeroSection />
-      <CategorySection />
-      <FeaturedProducts />
-    </main>
-  );
-}
-
 export default function App() {
   return (
     <RequirementsProvider>
@@ -94,6 +85,11 @@ export default function App() {
                   </ProtectedRoute>
                 } />
                 
+                {/* Product and Supplier Routes */}
+                <Route path="/product/:id" element={<ProductDetails />} />
+                <Route path="/supplier/:id/catalog" element={<SupplierCatalog />} />
+                <Route path="/manufacturer/:id" element={<ManufacturerPage />} />
+                
                 {/* Seller Routes */}
                 <Route path="/seller/leads" element={<LatestLeads />} />
                 <Route path="/seller/search-leads" element={<SearchLeads />} />
@@ -113,7 +109,11 @@ export default function App() {
                 <Route path="/buyer/favorites" element={<Favorites />} />
                 
                 {/* App Routes */}
-                <Route path="/app/settings" element={<Settings />} />
+                <Route path="/settings" element={
+                  <ProtectedRoute>
+                    <Settings />
+                  </ProtectedRoute>
+                } />
 
                 {/* Company Routes */}
                 <Route path="/company/about" element={<AboutUs />} />

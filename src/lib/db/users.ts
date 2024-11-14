@@ -1,5 +1,4 @@
 import prisma from '../prisma';
-import type { User } from '@prisma/client';
 
 export async function getUsers() {
   return prisma.user.findMany({

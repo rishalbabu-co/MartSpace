@@ -1,4 +1,4 @@
-import { Truck, Package, Globe, Clock, Shield, DollarSign } from 'lucide-react';
+import { Package, Globe, Clock, Shield, DollarSign } from 'lucide-react';
 
 export default function ShipOnMartspace() {
   const features = [

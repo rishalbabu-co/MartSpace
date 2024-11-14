@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Package, Search, Filter, Clock, CheckCircle, XCircle } from 'lucide-react';
+import { Search, Filter, Clock, CheckCircle, XCircle } from 'lucide-react';
 
 interface Order {
   id: string;
